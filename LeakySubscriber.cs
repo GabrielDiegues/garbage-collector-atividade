@@ -1,6 +1,6 @@
-﻿namespace GCLab;
+namespace GCLab;
 
-class LeakySubscriber
+class LeakySubscriber : IDisposable
 {
     private static readonly List<LeakySubscriber> _registry = new();
     private Publisher _publisher;
@@ -13,4 +13,9 @@ class LeakySubscriber
     }
 
     private void Handle() { /* noop */ }
+
+    public void Dispose()
+    {
+        _publisher.OnSomething -= Handle;
+    }
 }
