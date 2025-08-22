@@ -1,4 +1,4 @@
-﻿namespace GCLab;
+namespace GCLab;
 
 class Program
 {
@@ -38,13 +38,20 @@ class Program
         publisher.Raise();
 
         // Remover referências locais (mas problemas permanecem)
-        subscriber = null;
-        publisher = null;
+        subscriber.Dispose();
+        pinner.Dispose();
+        logger.Dispose();
+
         pinned = null;
+        pinner = null;
         logger = null;
         lohBuffer = null;
+        payload = null;
+        subscriber = null;
+        publisher = null;
 
         // Força coletas e verifica sobreviventes
+        GlobalCache.Clear();
         GCHelpers.FullCollect();
         tracker.Report();
 
